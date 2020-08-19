@@ -10,7 +10,9 @@
                 v-on:click="selected_answer(index)"
                 class="list-group-item list-group-item-action"
                 v-for="(answer, index) in shuffled_answers" v-bind:key="index"
-                v-bind:class="[selected_index === index? 'selected': '']"
+                v-bind:class="[
+                    !answered && selected_index === index? 'selected': answered && shuffled_answers[index] === question.correct_answer? 'correct': answered && selected_index == index? 'selected': ''
+                ]"
             >
             {{answer}}
             </li>
@@ -21,10 +23,10 @@
                 class="btn btn-primary btn-lg"
                 role="button"
                 v-on:click="submit_answer"
-                v-bind:disabled="selected_index === null"
+                v-bind:disabled="selected_index === null || answered"
             >
             Submit
-            </button>
+            </button    >
             <a v-on:click="next_question" class="btn btn-primary btn-lg" href="#" role="button">Next question</a>
         </div>            
     </div>
@@ -41,7 +43,8 @@ export default {
     data() {
         return {
             selected_index: null,
-            shuffled_answers: []
+            shuffled_answers: [],
+            answered: false
         }
     },
     computed: {
@@ -60,7 +63,8 @@ export default {
             immediate: true,
             handler() {
                 this.selected_index = null
-                 this.shuffle_answers()
+                this.shuffle_answers()
+                this.answered = false
 
             }
         }
@@ -76,15 +80,11 @@ export default {
         },
         submit_answer() {
             let is_correct = false
-
-            console.log("this.selected_index:" + this.selected_index)
-            console.log("this.shuffled_answers[this.selected_index]:" + this.shuffled_answers[this.selected_index])
-            console.log("this.correct_answer:" + this.question.correct_answer)
-
             if (this.shuffled_answers[this.selected_index] === this.question.correct_answer) {
                 is_correct = true
             }
             this.increment_correct_answers(is_correct)
+            this.answered = true
         }
     }
 }
