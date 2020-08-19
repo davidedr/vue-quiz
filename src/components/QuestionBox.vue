@@ -13,8 +13,7 @@
                 v-bind:class="[
                     !answered && selected_index === index? 'selected':
                     answered && shuffled_answers[index] === question.correct_answer? 'correct':
-                    answered && shuffled_answers[index] !== question.correct_answer? 'incorrect':
-                    answered && selected_index === index? 'selected': ''
+                    answered && selected_index === index && shuffled_answers[index] !== question.correct_answer? 'incorrect': ''
                 ]"
             >
             <b>{{answer}}</b>
