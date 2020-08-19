@@ -10,11 +10,7 @@
                 v-on:click="selected_answer(index)"
                 class="list-group-item list-group-item-action"
                 v-for="(answer, index) in shuffled_answers" v-bind:key="index"
-                v-bind:class="[
-                    !answered && selected_index === index? 'selected':
-                    answered && shuffled_answers[index] === question.correct_answer? 'correct':
-                    answered && selected_index === index && shuffled_answers[index] !== question.correct_answer? 'incorrect': ''
-                ]"
+                v-bind:class="answer_class(index)"
             >
             <b>{{answer}}</b>
             </li>
@@ -87,6 +83,11 @@ export default {
             }
             this.increment_correct_answers(is_correct)
             this.answered = true
+        },
+        answer_class(index) {
+           return !this.answered && this.selected_index === index? 'selected':
+                  this.answered && this.shuffled_answers[index] === this.question.correct_answer? 'correct':
+                  this.answered && this.selected_index === index && this.shuffled_answers[index] !== this.question.correct_answer? 'incorrect': ''
         }
     }
 }
