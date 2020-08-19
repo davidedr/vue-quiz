@@ -17,13 +17,14 @@
         </ul> 
         <br>
         <div>
-            <a
+            <button
                 class="btn btn-primary btn-lg"
                 role="button"
                 v-on:click="submit_answer"
+                v-bind:disabled="selected_index === null"
             >
             Submit
-            </a>
+            </button>
             <a v-on:click="next_question" class="btn btn-primary btn-lg" href="#" role="button">Next question</a>
         </div>            
     </div>
