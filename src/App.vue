@@ -1,6 +1,9 @@
 <template>
   <div id="app">
-      <Header />
+      <Header
+        v-bind:number_correct_answers="number_correct_answers"
+        v-bind:number_total_answers="number_total_answers"
+      />
       <div class="container">
         <div class="row">
           <div class="col-sm-6 offset-3">
@@ -8,6 +11,7 @@
               v-if="questions.length"
               v-bind:question="questions[current_question]"
               v-bind:next_question="next_question"
+              v-bind:increment_correct_answers="increment_correct_answers"
             />
           </div>
         </div>
@@ -28,12 +32,21 @@ export default {
   data() {
     return {
       questions: [],
-      current_question: 0
+      current_question: 0,
+      number_correct_answers: 0,
+      number_total_answers: 0
     }
   },
   methods: {
     next_question() {
       this.current_question++
+    },
+    increment_correct_answers(is_correct) {
+      if (is_correct) {
+         this.number_correct_answers++
+      }
+      this.number_total_answers++
+
     }
   },
   mounted: function() {
