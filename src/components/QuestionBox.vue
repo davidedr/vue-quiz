@@ -11,10 +11,13 @@
                 class="list-group-item list-group-item-action"
                 v-for="(answer, index) in shuffled_answers" v-bind:key="index"
                 v-bind:class="[
-                    !answered && selected_index === index? 'selected': answered && shuffled_answers[index] === question.correct_answer? 'correct': answered && selected_index == index? 'selected': ''
+                    !answered && selected_index === index? 'selected':
+                    answered && shuffled_answers[index] === question.correct_answer? 'correct':
+                    answered && shuffled_answers[index] !== question.correct_answer? 'incorrect':
+                    answered && selected_index === index? 'selected': ''
                 ]"
             >
-            {{answer}}
+            <b>{{answer}}</b>
             </li>
         </ul> 
         <br>
@@ -106,6 +109,6 @@ export default {
         background-color: lightgreen;
     }
     .incorrect {
-        background-color: red;
+        background-color: lightcoral;
     }
 </style>
