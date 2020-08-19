@@ -4,7 +4,11 @@
       <div class="container">
         <div class="row">
           <div class="col-sm-6 offset-3">
-            <QuestionBox />
+            <QuestionBox
+              v-if="questions.length"
+              v-bind:question="questions[current_question]"
+              v-bind:next_question="next_question"
+            />
           </div>
         </div>
       </div>      
@@ -23,7 +27,13 @@ export default {
   },
   data() {
     return {
-      questions: []
+      questions: [],
+      current_question: 0
+    }
+  },
+  methods: {
+    next_question() {
+      this.current_question++
     }
   },
   mounted: function() {
